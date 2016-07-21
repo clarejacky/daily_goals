@@ -10,6 +10,7 @@ var assign = Object.assign || require('object.assign');
 var notify = require('gulp-notify');
 var browserSync = require('browser-sync');
 var htmlmin = require('gulp-htmlmin');
+var sass = require('gulp-sass')
 
 // transpiles changed es6 files to SystemJS format
 // the plumber() call prevents 'pipe breaking' caused
@@ -34,11 +35,21 @@ gulp.task('build-html', function() {
 });
 
 // copies changed css files to the output directory
+// gulp.task('build-css', function() {
+//   return gulp.src(paths.css)
+//     .pipe(changed(paths.output, {extension: '.css'}))
+//     .pipe(gulp.dest(paths.output))
+//     .pipe(browserSync.stream());
+// });
+
 gulp.task('build-css', function() {
-  return gulp.src(paths.css)
-    .pipe(changed(paths.output, {extension: '.css'}))
-    .pipe(gulp.dest(paths.output))
-    .pipe(browserSync.stream());
+  return gulp.src(paths.style)
+    .pipe(plumber())
+    .pipe(changed(paths.style, {extension: '.css'}))
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./styles'));
 });
 
 // this task calls the clean task (located
