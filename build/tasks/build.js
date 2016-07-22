@@ -38,15 +38,14 @@ gulp.task('build-html', function() {
 
 
 gulp.task('build-css', function() {
-  return gulp.src('./style.scss')
+  return gulp.src(paths.style)
     .pipe(plumber())
-    .pipe(changed(paths.style))
+    .pipe(changed(paths.output, {extension: '.css'}))
     .pipe(sourcemaps.init())
     .pipe(sass())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./style.css'));
+    .pipe(gulp.dest(paths.output));
 });
-
 // this task calls the clean task (located
 // in ./clean.js), then runs the build-system
 // and build-html tasks in parallel
