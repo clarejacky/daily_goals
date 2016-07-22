@@ -35,21 +35,16 @@ gulp.task('build-html', function() {
 });
 
 // copies changed css files to the output directory
-// gulp.task('build-css', function() {
-//   return gulp.src(paths.css)
-//     .pipe(changed(paths.output, {extension: '.css'}))
-//     .pipe(gulp.dest(paths.output))
-//     .pipe(browserSync.stream());
-// });
+
 
 gulp.task('build-css', function() {
-  return gulp.src(paths.style)
+  return gulp.src('./style.scss')
     .pipe(plumber())
-    .pipe(changed(paths.style, {extension: '.css'}))
+    .pipe(changed(paths.style))
     .pipe(sourcemaps.init())
     .pipe(sass())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./styles'));
+    .pipe(gulp.dest('./style.css'));
 });
 
 // this task calls the clean task (located
